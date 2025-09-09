@@ -1,0 +1,40 @@
+# Arquivos de Sistema e de Ambiente
+.DS_Store                 # Exclui arquivos do macOS
+.env                      # Arquivo de variáveis de ambiente
+venv/                     # Diretório do ambiente virtual
+env/                      # Outro nome comum para ambiente virtual
+__pycache__/              # Diretório de cache do Python
+
+# Arquivos de Banco de Dados
+db.sqlite3                # Banco de dados padrão do Django (SQLite)
+*.sqlite3                 # Exclui qualquer arquivo .sqlite3
+
+# Diretórios de Mídia e Static (se estiverem na raiz do projeto)
+# Descomente estas linhas se você armazena arquivos de mídia e estáticos no seu projeto.
+# media/
+# static/
+
+# Uploads de Usuário
+# Evita que arquivos enviados por usuários sejam incluídos no Git.
+# uploads/
+
+# Arquivos de Log e Cache do Django
+*.log                     # Arquivos de log
+*.pot                     # Arquivos de tradução
+/staticfiles/             # Diretório de arquivos estáticos gerados
+
+# Arquivos de Teste
+.coverage                 # Arquivos de cobertura de código
+htmlcov/                  # Diretório de cobertura de código
+.pytest_cache/            # Cache do pytest
+
+# IDEs e Editores de Código
+.vscode/                  # Configurações do Visual Studio Code
+.idea/                    # Configurações do PyCharm / IntelliJ
+*.sublime-workspace       # Workspace do Sublime Text
+*.sublime-project         # Projeto do Sublime Text
+*.swp                     # Arquivos de troca do Vim
+
+# Diversos
+# Exclui arquivos de migração que já foram aplicados.
+# migrations/             # Descomente e gerencie as migrations manualmente
