@@ -19,16 +19,16 @@ services:
 #    depends_on:
 #      - dropping-api
 
-  postgres:
-    image: postgres:16
-    ports:
-      - '5435:5432'
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-    volumes:
-      - polls_pg_data:/var/lib/postgresql/data
-
-volumes:
-  polls_pg_data:
+#  postgres:
+#    image: postgres:16
+#    ports:
+#      - '5435:5432'
+#    environment:
+#      - POSTGRES_USER=${DB_USER}
+#      - POSTGRES_PASSWORD=${DB_PASSWORD}
+#      - POSTGRES_DB=${DB_NAME}
+#    volumes:
+#      - polls_pg_data:/var/lib/postgresql/data
+#
+#volumes:
+#  polls_pg_data:
