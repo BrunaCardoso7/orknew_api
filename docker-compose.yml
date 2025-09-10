@@ -5,7 +5,7 @@ services:
     build: .
     container_name: orknew-api
     ports:
-      - "8045:8000"
+      - "8012:8000"
     env_file:
       - .env
 
