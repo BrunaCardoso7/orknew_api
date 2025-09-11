@@ -1,12 +1,12 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
-from apps.users.models import User
+from .models import AuthUser
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
+        model=AuthUser
         fields = ["id", "username", "email", "password"]
 
         extra_kwarg = {
