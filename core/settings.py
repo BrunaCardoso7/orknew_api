@@ -25,10 +25,23 @@ SECRET_KEY = 'django-insecure-6(7uc#qt3!rfxn^r!jscg%ri8u7qtl1c1%z_=h$6w1y%9n=34g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(',')
-
-
+ALLOWED_HOSTS = [
+    'orknew.dev',
+    'www.orknew.dev',
+    'localhost',
+    '127.0.0.1',
+    '*',  # Temporariamente para teste
+]
+CORS_ALLOWED_ORIGINS = [
+    "https://orknew.dev",
+    "https://www.orknew.dev",
+    "http://orknew.dev",
+    "http://www.orknew.dev",
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+CORS_ALLOW_ALL_ORIGINS = True  # Temporariamente para teste
+CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
