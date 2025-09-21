@@ -1,21 +1,19 @@
-version: '3.9'
-
 services:
   orknew-api:
     build: .
     container_name: orknew-api
     ports:
-    - "8000:8000"
+      - "8012:8000"
     env_file:
-    - .env
+      - .env
 
   orknew-proxy:
     image: nginx:latest
     container_name: orknew-proxy
     ports:
-    - "80:80"
+      - "80:80"
     volumes:
-    - ./orknew.conf:/etc/nginx/conf.d/orknew.conf:ro
-    - /staticfiles:/static:ro
+      - ./orknew.conf:/etc/nginx/nginx.conf:ro
+      - /staticfiles:/static:ro
     depends_on:
-    - orknew-api
+      - orknew-api
