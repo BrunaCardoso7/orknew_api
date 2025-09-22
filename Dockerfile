@@ -1,49 +1,40 @@
-# Imagem base
-FROM python:3.12-slim AS builder
+FROM python:3.11-slim
 
-RUN mkdir /app
-WORKDIR /app
-
-# Variável de ambiente para não gerar arquivos .pyc
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Atualiza e instala dependências do sistema
+# Instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
+    gcc \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Copia os arquivos
-COPY requirements.txt /app/
-
-# Instala as dependências Python
-RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
-
-# stage production
-FROM python:3.12-slim
-
-RUN useradd -m -r appuser && \
-    mkdir /app && \
-    chown -R appuser /app
-
-
-COPY --from=builder /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
-COPY --from=builder /usr/local/bin/ /usr/local/bin/
-
+# Definir diretório de trabalho
 WORKDIR /app
-COPY --chown=appuser:appuser . .
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Copiar requirements e instalar dependências Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-USER appuser
+# Copiar código da aplicação
+COPY . .
 
-# Expõe a porta
+# Criar diretórios necessários
+RUN mkdir -p /app/staticfiles /app/media /app/nginx/ssl
+
+# Configurar permissões dos certificados SSL (se existirem)
+RUN if [ -f "/app/nginx/ssl/cloudflare.key" ]; then \
+        chmod 600 /app/nginx/ssl/cloudflare.key; \
+        echo "SSL key permissions set"; \
+    fi
+
+RUN if [ -f "/app/nginx/ssl/cloudflare.crt" ]; then \
+        chmod 644 /app/nginx/ssl/cloudflare.crt; \
+        echo "SSL certificate permissions set"; \
+    fi
+
+# Tornar o script executável
+RUN chmod +x startup.sh
+
+# Expor porta
 EXPOSE 8000
 
-RUN chmod +x /app/entrypoint.sh
-
-# Comando padrão
-CMD ["/app/entrypoint.sh"]
+# Executar script de inicialização
+CMD ["./startup.sh"]
