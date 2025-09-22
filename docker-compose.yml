@@ -1,19 +1,25 @@
+version: '3.8'
+
 services:
   orknew-api:
     build: .
     container_name: orknew-api
-    ports:
-      - "8012:8000"
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/code
     env_file:
       - .env
+    expose:
+      - "8000"
 
   orknew-proxy:
     image: nginx:latest
     container_name: orknew-proxy
     ports:
       - "80:80"
+      - "443:443"
     volumes:
-      - ./orknew.conf:/etc/nginx/nginx.conf:ro
-      - /staticfiles:/static:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
     depends_on:
       - orknew-api
