@@ -55,7 +55,8 @@ class UserSerializer(serializers.ModelSerializer):
         user.last_name = new_username
         super().update(user, validated_data)
 
-        user.username = new_username
+
+
         return user
 
     def update(self, instance, validated_data):

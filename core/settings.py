@@ -176,18 +176,12 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
 }
-
 AUTH_USER_MODEL = 'users.AuthUser'
+
 from cloudinary_storage.storage import MediaCloudinaryStorage
 from django.core.files.storage import default_storage
 
 # Forçar o storage do Cloudinary
 import django.core.files.storage
 django.core.files.storage.default_storage = MediaCloudinaryStorage()
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=3),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-}
 
