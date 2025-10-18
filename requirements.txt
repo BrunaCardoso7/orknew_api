@@ -6,3 +6,6 @@ drf-yasg
 psycopg2-binary
 django-cors-headers
 Pillow
+django-cloudinary-storage
+cloudinary
+pillow

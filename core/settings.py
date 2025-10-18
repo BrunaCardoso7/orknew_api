@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,11 +29,10 @@ SECRET_KEY = 'django-insecure-6(7uc#qt3!rfxn^r!jscg%ri8u7qtl1c1%z_=h$6w1y%9n=34g
 DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(',')
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173', 'https://ork-new-front-end.vercel.app').split(',')
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django.contrib.admin',
@@ -39,9 +40,38 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    # CLOUDINARY DEVE VIR ANTES DO STATICFILES
+    'cloudinary_storage',
+    'cloudinary',
+
     'django.contrib.staticfiles',
     'apps.users',
+    'apps.images.apps.ImagesConfig',
+    'apps.posts',
+    'apps.user_image'
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dcezopogd',
+    'API_KEY': '554937882793472',
+    'API_SECRET': 'ryTyn3wz0KxGrGQkuVehD5HMMIw',
+}
+
+os.environ['CLOUDINARY_URL'] = 'cloudinary://554937882793472:ryTyn3wz0KxGrGQkuVehD5HMMIw@dcezopogd'
+
+cloudinary.config(
+    cloud_name='dcezopogd',
+    api_key='554937882793472',
+    api_secret='ryTyn3wz0KxGrGQkuVehD5HMMIw',
+    secure=True
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,10 +109,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
+        "NAME": os.getenv("DB_NAME","vitoria"),
+        "USER": os.getenv("DB_USER", "vitoria_user"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "E7NINtqKofhLD8ZG9N6zDzvddviy5zA8"),
+        "HOST": os.getenv("DB_HOST", "dpg-d39jiube5dus73bh63u0-a.oregon-postgres.render.com"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
@@ -144,3 +174,9 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'users.AuthUser'
+from cloudinary_storage.storage import MediaCloudinaryStorage
+from django.core.files.storage import default_storage
+
+# Forçar o storage do Cloudinary
+import django.core.files.storage
+django.core.files.storage.default_storage = MediaCloudinaryStorage()
