@@ -32,7 +32,6 @@ ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split('
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173', 'https://ork-new-front-end.vercel.app').split(',')
 
 
-# Application definition
 INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django.contrib.admin',
@@ -41,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 
-    # CLOUDINARY DEVE VIR ANTES DO STATICFILES
     'cloudinary_storage',
     'cloudinary',
 
