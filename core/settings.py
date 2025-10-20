@@ -113,10 +113,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
+        "NAME": os.getenv("DB_NAME","vitoria"),
+        "USER": os.getenv("DB_USER", "vitoria_user"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "E7NINtqKofhLD8ZG9N6zDzvddviy5zA8"),
+        "HOST": os.getenv("DB_HOST", "dpg-d39jiube5dus73bh63u0-a.oregon-postgres.render.com"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
