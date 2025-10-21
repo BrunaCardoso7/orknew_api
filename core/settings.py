@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 
+    # CLOUDINARY DEVE VIR ANTES DO STATICFILES
     'cloudinary_storage',
     'cloudinary',
 
@@ -176,8 +177,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
 }
-AUTH_USER_MODEL = 'users.AuthUser'
 
+AUTH_USER_MODEL = 'users.AuthUser'
 from cloudinary_storage.storage import MediaCloudinaryStorage
 from django.core.files.storage import default_storage
 
