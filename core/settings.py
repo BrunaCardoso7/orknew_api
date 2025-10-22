@@ -28,11 +28,13 @@ SECRET_KEY = 'django-insecure-6(7uc#qt3!rfxn^r!jscg%ri8u7qtl1c1%z_=h$6w1y%9n=34g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173', 'https://ork-new-front-end.vercel.app').split(',')
+# ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173', 'https://ork-new-front-end.vercel.app').split(',')
 
+# Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',  # ADICIONADO
     'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +75,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # ADICIONADO antes de CommonMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,6 +83,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 ROOT_URLCONF = 'core.urls'
 
@@ -107,10 +113,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME","vitoria"),
-        "USER": os.getenv("DB_USER", "vitoria_user"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "E7NINtqKofhLD8ZG9N6zDzvddviy5zA8"),
-        "HOST": os.getenv("DB_HOST", "dpg-d39jiube5dus73bh63u0-a.oregon-postgres.render.com"),
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
@@ -178,3 +184,10 @@ from django.core.files.storage import default_storage
 # Forçar o storage do Cloudinary
 import django.core.files.storage
 django.core.files.storage.default_storage = MediaCloudinaryStorage()
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=3),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+}
+
