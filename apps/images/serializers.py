@@ -28,14 +28,14 @@ class ImageSerializer(serializers.ModelSerializer):
 
         if obj.ie_origem == 'PRF':
                 if obj.image:
-                image_str = str(obj.image)
+                    image_str = str(obj.image)
 
-                if image_str.startswith('https://'):
-                    return image_str
-                elif image_str.startswith('image/upload/'):
-                    return f"https://res.cloudinary.com/dcezopogd/{image_str}"
-                else:
-                    clean_path = image_str.lstrip('/')
-                    return f"https://res.cloudinary.com/dcezopogd/image/upload/{clean_path}"
+                    if image_str.startswith('https://'):
+                        return image_str
+                    elif image_str.startswith('image/upload/'):
+                        return f"https://res.cloudinary.com/dcezopogd/{image_str}"
+                    else:
+                        clean_path = image_str.lstrip('/')
+                        return f"https://res.cloudinary.com/dcezopogd/image/upload/{clean_path}"
 
         return None
