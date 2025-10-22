@@ -30,6 +30,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 # CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173', 'https://ork-new-front-end.vercel.app').split(',')
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "orknew-api.onrender.com,localhost,127.0.0.1").split(",")
 
 # Application definition
 
